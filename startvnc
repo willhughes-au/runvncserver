@@ -31,6 +31,8 @@ DISPLAY=":0"
 # Set the port (default 5900)
 VNCPORT="5900"
 
+VNCOPTIONS="-display ${DISPLAY} -passwordfile ${PASSWDFILE} -rfbport ${VNCPORT} -FrameRate 5 -ZlibLevel 9 -CompareFB 1"
+
 # PID of the actual VNC server running
 # The PID is actually created this way, so it is compatible with the vncserver command
 # if you want to kill the VNC server manually, just type 
@@ -81,7 +83,7 @@ case "$1" in
             echo -e "VNC Server is running (pid: ${VAR})"
 	    echo
         else
-            ${VNCSERVER} -display ${DISPLAY} -passwordfile ${PASSWDFILE} -rfbport ${VNCPORT} >> ${LOGFILE} 2>&1 &
+            ${VNCSERVER} ${VNCOPTIONS} >> ${LOGFILE} 2>&1 &
 	    if [ $? -eq 0 ]
 	    then
             	fn_pid
@@ -107,7 +109,7 @@ case "$1" in
 
             if [ $? -eq 0 ]
             then 
-                ${VNCSERVER} -display ${DISPLAY} -passwordfile ${PASSWDFILE} -rfbport ${VNCPORT} >> ${LOGFILE} 2>&1 &
+                ${VNCSERVER} ${VNCOPTIONS} >> ${LOGFILE} 2>&1 &
                 echo -e ${OK}
 		echo
                 fn_pid 
@@ -122,7 +124,7 @@ case "$1" in
 
         else
 
-            ${VNCSERVER} -display ${DISPLAY} -passwordfile ${PASSWDFILE} -rfbport ${VNCPORT} >> ${LOGFILE} 2>&1 &
+            ${VNCSERVER} ${VNCOPTIONS} >> ${LOGFILE} 2>&1 &
             if [ $? -eq 0 ]
             then
                 echo -e ${OK}
